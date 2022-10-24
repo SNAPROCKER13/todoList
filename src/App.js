@@ -109,6 +109,7 @@ function App() {
     const arr = []
     lists.filter((list) => {
       if (list.id == id) {
+        list.btnDone = true
         list.done = true
       }
 
@@ -118,6 +119,8 @@ function App() {
     setLists(arr)
     localStorage.setItem('lists', JSON.stringify(arr))
   }
+
+  console.log(lists)
 
   return (
     <div>
@@ -134,7 +137,7 @@ function App() {
             {lists.map((list, id) => {
               return (
                 <div key={id} style={{ boxSizing: 'border-box', border: '1px solid black', margin: '10px', padding: '10px', backgroundColor: 'powderblue', }}>
-                  {!list.edit ? <div style={{ display: 'flex', justifyContent: 'center' }}><div><h2 style={{ margin: '0 auto 20px' }}>{list.task}</h2></div><div>{!list.done ? '' : <h3 style={{ margin: '0 auto 20px', color: 'green' }}><BsCheckLg /></h3>}</div></div> : <div><input className='textbox-edit' type="text" onChange={e => handleChangeEdit(e)} /><button className='btn' disabled={btn} onClick={() => handleClickConfirmEdit(list.id)}>ยืนยัน</button><button onClick={() => handleClickCancelEdit(list.id)}>ยกเลิก</button></div>}
+                  {!list.edit ? <div style={{ display: 'flex', justifyContent: 'center' }}><div><h2 style={{ margin: '0 auto 20px' }}>{list.task}</h2></div><div>{!list.btnDone ? '' : <h3 style={{ margin: '0 auto 20px', color: 'green' }}><BsCheckLg /></h3>}</div></div> : <div><input className='textbox-edit' type="text" onChange={e => handleChangeEdit(e)} /><button className='btn' disabled={btn} onClick={() => handleClickConfirmEdit(list.id)}>ยืนยัน</button><button onClick={() => handleClickCancelEdit(list.id)}>ยกเลิก</button></div>}
                   <div style={{ display: 'flex', justifyContent: 'space-around' }}>
                     <div><button onClick={() => handleClickDelete(list.id)}>ลบ</button>{list.done == false ? <button onClick={() => handleClickEdit(list.id)}>แก้ไข</button> : ''}</div>
                     {list.task != '' || list.done == true ? <div><button onClick={() => handleClickDone(list.id)} disabled={list.btnDone}>เรียบร้อย</button></div> : ''}
